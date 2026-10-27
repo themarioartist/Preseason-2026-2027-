@@ -97,6 +97,12 @@ public class Elevator extends SubsystemBase {
     elevatorMotor1.stopMotor();
   }
 
+  public void zeroEncoder(){
+    elevatorMotor1.stop();
+    elevatorMotor1.relativeEncoder(0.0);
+    setpointHeight = 0;
+  }
+
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
