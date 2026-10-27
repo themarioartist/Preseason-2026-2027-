@@ -78,9 +78,21 @@ public class Elevator extends SubsystemBase {
 
   public void setDesiredHeight(double heightMeters){
     setpointHeight = MathUtil.clamp(heightMeters, 0, 1.44);
+    elevatorController.setSetpoint(
+      setpointHeight, ControlType.kMAXMotionPositionControl, ClosedLoopSlot.kSlot0
+    );
   }
 
-  
+  public void setElevatorSpeed(double speed){
+    positionControlEnabled = false;
+    MathUtil.clamp(speed, -1, 1);
+    
+  }
+
+  public void setElevatorVoltage(double voltage){
+    positionControlEnabled = false;
+    MathUtil.clamp(speed, -12, 12)
+  }
 
   @Override
   public void periodic() {
