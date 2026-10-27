@@ -85,13 +85,16 @@ public class Elevator extends SubsystemBase {
 
   public void setElevatorSpeed(double speed){
     positionControlEnabled = false;
-    MathUtil.clamp(speed, -1, 1);
-    
+    elevatorMotor1.setElevatorSpeed(MathUtil.clamp(speed, -1, 1));
   }
 
   public void setElevatorVoltage(double voltage){
     positionControlEnabled = false;
-    MathUtil.clamp(speed, -12, 12)
+    elevatorMotor1.setElevatorVoltage(MathUtil.clamp(speed, -12, 12));
+  }
+
+  public void stop(){
+    elevatorMotor1.stopMotor();
   }
 
   @Override
