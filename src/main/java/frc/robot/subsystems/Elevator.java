@@ -6,8 +6,10 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.math.MathUtil;
 import com.revrobotics.spark.SparkFlex;
 import com.revrobotics.spark.SparkClosedLoopController;
+import com.revrobotics.spark.SparkRelativeEncoder
 import com.revrobotics.RelativeEncoder;
 
 public class Elevator extends SubsystemBase {
@@ -42,10 +44,7 @@ public class Elevator extends SubsystemBase {
       .feedbackSensor(FeedbackSensor.kPrimaryEncoder)
       .p(0.83).i(0).d(0)
       .feedForward
-        .kS(0.584)
-        .kG(0.366)
-        .kV(2.15)
-        .kA(0.05)
+        .kS(0.584).kG(0.366).kV(2.15).kA(0.05)
       .maxMotion
         .cruiseVelocity(0.75)
         .maxAcceleration(1.0)
@@ -60,12 +59,28 @@ public class Elevator extends SubsystemBase {
 
     elevatorMotor1.configure(
       leaderConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters
-    )
+    );
 
     elevatorMotor2.configure(
       followerConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters
-    )
+    );
+
+  relativeEncoder.setPosition(0.0);
   }
+
+  public double getElevatorHeight(){
+    return relativeEncoder.getPosition();
+  }
+
+  public double getElevatorHeight(){
+    return relativeEncoder.getVelocity();
+  }
+
+  public void setDesiredHeight(double heightMeters){
+    setpointHeight = MathUtil.clamp(heightMeters, 0, 1.44);
+  }
+
+  
 
   @Override
   public void periodic() {
